@@ -44,7 +44,6 @@ footer .footer-info {
 	float: left;
 }
 
-
 /*===========NAVIGATION=========*/
 .navbar-default {
     background-color: rgba(0, 0, 0, 0.8);
@@ -205,9 +204,7 @@ text-decoration:none;
 text-decoration: none;    
 color:#e67e22;
 }
-.post-slide .post-date{    
-text-transform:capitalize;
-}
+
 .post-slide .post-date:before{    
 content: &quot;\f073&quot;;    
 font-family: 'FontAwesome';    
@@ -390,9 +387,6 @@ padding: 1.3em;
 0% { opacity: 0; -webkit-transform: scale(3); transform: scale(3);} 
 100% { opacity: 1; -webkit-transform: scale(1); transform: scale(1);}
 }
-
-
-
 
 
 
