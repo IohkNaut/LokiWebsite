@@ -7,5 +7,4 @@
                 <li class="active">Data</li>
             </ol>
         </div><!-- end breadcrumb -->
-    </div>
-</div>
+</div></div>
