@@ -17,8 +17,8 @@
             $run_gal1 = mysql_query($sql_gal);
             
             ?> 
-    		<div class="preview col-md-6"> 
-     			<div class="preview-pic tab-content"> 
+    		<div class="preview col-md-6" > 
+     			<div class="preview-pic tab-content" style="height:400px;"> 
       				<div class="tab-pane active" id="pic-1">
                     	<img src="admincp/modules/mnproduct/uploaded/<?php echo $row_pd['image']?>" 
                         					alt="<?php echo $row_pd['product_name'] ?>"></div> 
@@ -30,15 +30,15 @@
                     <?php $num1 += 1; } ?>
      			</div> 
      			<ul class="preview-thumbnail nav nav-tabs"> 
-      				<li class="active">
-                    	<a data-target="#pic-1" data-toggle="tab"><img src="admincp/modules/mnproduct/uploaded/<?php echo $row_pd['image']?>"></a>
+      				<li class="active" style="height:50px;">
+                    	<a data-target="#pic-1" data-toggle="tab" ><img height="70" src="admincp/modules/mnproduct/uploaded/<?php echo $row_pd['image']?>"></a>
       				</li> 
                     <?php
 						$num = 2;
 						while($row_gal = mysql_fetch_array($run_gal)) {
 					?>
       				<li>
-                    	<a data-target="#pic-<?php echo $num ?>" data-toggle="tab"><img src="admincp/modules/pd_gallery/uploaded/<?php echo $row_gal['image']?>"></a>
+                    	<a data-target="#pic-<?php echo $num ?>" data-toggle="tab"><img height="70" src="admincp/modules/pd_gallery/uploaded/<?php echo $row_gal['image']?>"></a>
       				</li> 
 					<?php $num += 1; } ?>
      			</ul> 
@@ -95,9 +95,18 @@
                     </div>
                     
                     <div class="action" align="center" style="margin-top:30px;">
+                    <?php
+						if(mysql_num_rows($run_dt) > 0) {?>
                 	<a href="cart.php?add=<?php echo $product_id ?>" >
                     <button class="btn btn-success" name="addtocart" type="submit"><img src="images/ShoppingCart_24px.png"/>  THÊM VÀO GIỎ</button>
                     </a>
+                    <?php
+						} else {
+					?>
+                    <button disabled="disabled" class="btn btn-success" name="addtocart" type="submit"><img src="images/ShoppingCart_24px.png"/>  THÊM VÀO GIỎ</button>
+                    <?php
+						}
+						?>
                 </div> 
                 </form>     
 

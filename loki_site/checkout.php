@@ -58,7 +58,7 @@
 					if(substr($name, 0, 5) == 'cart_') {
 						$add = substr($name, 7, strlen($name - 7));
 						$size = substr($name, 5, strlen($name - 5));
-						$sql_dt = "insert into orders_detail(orders_id, product_id, product_size, quantity) values ($id, $add, $size, $value)";
+						$sql_dt = "call sp_orders_detail_ins($id, $add, $size, $value)";
 						mysql_query($sql_dt);
 						unset($_SESSION[$name]);
 					}

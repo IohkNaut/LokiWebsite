@@ -24,5 +24,9 @@
 		}
 	  ?>
     </table>
-    <center><button class="btn btn-md btn-primary" name="btn_print" type="submit"> In đơn hàng</button></center>
+    <center>
+    	<a href="fpdf/order.php?id=<?php echo $orders_id;?>">
+    		<button class="btn btn-md btn-primary" name="btn_print" type="submit"> In đơn hàng</button>
+        </a>
+    </center>
 </div>

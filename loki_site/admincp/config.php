@@ -3,7 +3,7 @@
 	$USERNAME= "root"; 
 	$PASSWORD= "12345"; 
 	$DBNAME= "lokisneaker"; 
-	$conn= mysql_connect($SERVER, $USERNAME, $PASSWORD); 
+	$conn= mysql_connect($SERVER, $USERNAME, $PASSWORD, false, 65536); 
 	if ( !$conn) { 
 	//Không kết nối được, thoát ra và báo lỗi
 		die("Không nết nối được vào MySQL server"); 

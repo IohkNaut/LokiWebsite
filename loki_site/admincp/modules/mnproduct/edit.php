@@ -19,7 +19,7 @@
         <div class="col-xs-8 col-md-8 col-sm-8" style="margin-top:10px;">
             <label for=""> Giá niêm yết (vnđ)</label> 
             <input style="margin-top:10px;" class="form-control" name="num_price" required="" type="number" 
-            value="<?php echo number_format($row_product['price'], 0)?>">
+            value="<?php echo $row_product['price']?>">
         </div> 
         <div class="col-xs-4 col-md-4 col-sm-4" style="margin-top:10px;"> 
             <label for=""> Giảm giá (%)</label>

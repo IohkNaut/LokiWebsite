@@ -25,6 +25,14 @@
             include('modules/right/news.php');
         } else if($tmp == 'search') {
             include('modules/right/search.php');
+        } else if($tmp == 'size_guide') {
+            include('modules/right/size_guide.php');
+        } else if($tmp == 'shop_guide') {
+            include('modules/right/shop_guide.php');
+        } else if($tmp == 'contact') {
+            include('modules/right/contact.php');
+        } else if($tmp == 'intro') {
+            include('modules/right/intro.php');
         } else
             include('modules/right/index_content.php');
         

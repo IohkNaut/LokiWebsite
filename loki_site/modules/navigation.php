@@ -15,12 +15,12 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav nav-tabs nav-justified navbar-static-top" style="padding-top:8px; font-size:14px;">
-                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="index.php?view=intro">Giới thiệu</a></li>
                         <li><a href="index.php?view=all&page=1">Sản phẩm</a></li>
-                        <li><a href="#">Hướng dẫn chọn size</a></li>
-                        <li><a href="#">Hướng dẫn mua hàng</a></li>
+                        <li><a href="index.php?view=size_guide">Hướng dẫn chọn size</a></li>
+                        <li><a href="index.php?view=shop_guide">Hướng dẫn mua hàng</a></li>
                         <li><a href="index.php?view=news&page=1">Tin tức</a></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="index.php?view=contact">Liên hệ</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->           	         
         </nav></div></div><?php ob_end_flush(); ?>

@@ -26,8 +26,8 @@
 			} else if($tmp == 'or_details') {
 				include('modules/or_details/main.php');
 			} else
-				include('modules/slider.php');
-			
+				include('modules/home.php');
+
 		?>
         
         </div>

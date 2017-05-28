@@ -15,10 +15,16 @@
                     <div style="color:#333;"><img src="images/User_26px.png" alt="Login"/>  Đăng nhập hoặc Đăng ký</div>                           
                 </a>	
             </div>
-            
+            <?php
+				if(isset($_SESSION['count']))
+					$count_pd = $_SESSION['count'];
+				else
+					$count_pd = 0;
+			?>
             <div class="col-md-2 col-sm-6 col-xs-6" style="margin-top: 26px; color:#191919;"><!--gio hang-->
                 <a href="cart.php">
-                    <div style="color:#333;"><img src="images/ShoppingCart_gr.png" alt="Cart"/> Giỏ hàng của bạn</div>                           
+                    <div style="color:#333;"><img src="images/ShoppingCart_gr.png" alt="Cart"/> Giỏ hàng <span class="badge"><?php echo $count_pd;?></span></div>
+                                               
                 </a>
             </div>
             <div class="clearfix"></div>

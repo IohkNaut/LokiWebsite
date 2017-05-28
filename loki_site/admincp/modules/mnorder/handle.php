@@ -7,6 +7,7 @@
 		$sql = "update orders set address = '$address', status = '$status' where orders_id = '$id'";
 		if(mysql_query($sql)) {
 			if($status == 1) {
+				mysql_query("update orders set date = now() where orders_id = '$id'");
 				$query_dt = mysql_query("select * from orders_detail where orders_id = $id");
 				while($row_dt = mysql_fetch_array($query_dt)) {
 					$pd_id = $row_dt['product_id'];

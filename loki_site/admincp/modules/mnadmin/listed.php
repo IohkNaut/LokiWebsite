@@ -1,5 +1,5 @@
 <?php
-	$sql = "select * from admin";
+	$sql = "call sp_admin_listed();";
 	$run = mysql_query($sql);
 ?>
 <div class="table-responsive" style="margin-top:8px;">

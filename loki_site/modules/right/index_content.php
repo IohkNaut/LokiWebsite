@@ -15,7 +15,7 @@
 		while ($row_hot = mysql_fetch_array($run_hot)) {
 			if ($row_hot['discount'] > 0) { $sale = $row_hot['price'] * (1 - $row_hot['discount']/100);
 	?>
-    <div class="col-md-3">
+    <div class="col-md-3" style="height:250px;">
     					<span class="label label-danger" style="font-size:12px;">Sale <?php echo $row_hot['discount'] ?>%</span>
                         <span class="label label-primary" style="font-size:12px;">HOT</span>
         <div class="thumbnail"> 
