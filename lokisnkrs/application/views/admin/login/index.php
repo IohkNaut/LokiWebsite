@@ -12,6 +12,7 @@
     
     <body> 
     	<div class="main">
+        
             <div class="container" style="height:755px;">
                 <div class="row" style="margin-top:200px;">
                     <div class="col-xs-12 col-sm-12 col-md-4 well well-sm col-md-offset-4" style="margin-top:20px;">

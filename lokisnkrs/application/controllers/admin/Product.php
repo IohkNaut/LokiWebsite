@@ -308,7 +308,7 @@ class Product extends MY_Controller {
 		$this->load->view('admin/main', $data);
 	}
 	
-	//xoa catalog
+	//xoa san pahm
 	function delete() {
 		
 		$id = $this->uri->rsegment('3');

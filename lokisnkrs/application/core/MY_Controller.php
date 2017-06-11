@@ -14,10 +14,37 @@ class MY_Controller extends CI_Controller {
 				//xu ly cac du lieu khi truy cap vao trang admin
 				$this->load->helper('admin');
 				$this->_check_login();
-				break;;
+				break;
 			}
 			default: {
 				//xu ly du lieu o trang ngoai
+				//lay danh muc san pham
+				$this->load->model('catalog_model');
+				$input = array();
+				$input['order'] = array('catalog_name','asci');
+				$input['where'] = array('parent_id' => null);
+				$catalog_list = $this->catalog_model->get_list($input);
+				foreach ($catalog_list as $row) {
+					$input['where'] = array('parent_id' => $row->catalog_id);
+					$subs = $this->catalog_model->get_list($input);
+					$row->subs = $subs;
+				}
+				$this->data['catalog_list'] = $catalog_list;
+				
+				//goi thu vien cart
+				$this->load->library('cart');
+				$this->data['total_items'] = $this->cart->total_items();
+				
+				//lay thong tin thanh vien dang nhap
+				$this->load->model('member_model');
+				$member_id = $this->session->userdata('login_member');
+				$member = $this->member_model->get_info($member_id);
+				//pre($member);
+				if(empty($member)) {
+					$this->data['member_name'] = '';
+				} else {
+					$this->data['member_name'] = $member->member_name;
+				}
 			}
 		}
 	}
@@ -35,4 +62,5 @@ class MY_Controller extends CI_Controller {
 			redirect(admin_url('home'));
 		}
 	}
+
 }

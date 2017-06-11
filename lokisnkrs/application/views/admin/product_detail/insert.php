@@ -1,6 +1,6 @@
 
 <legend style="margin-top:13px; font-weight:bold;"><i class="glyphicon glyphicon-plus-sign"></i> THÊM CHI TIẾT SẢN PHẨM</legend> 
-<form action="<?php echo admin_url('product_detail/insert')?>" enctype="multipart/form-data" method="post" class="form" role="form" >
+<form action="<?php echo admin_url('product_detail/insert/'.$product_id)?>" enctype="multipart/form-data" method="post" class="form" role="form" >
     <div class="row" > 
         <div class="col-xs-6 col-md-6 col-sm-6" style="margin-top:10px;">
             <label for=""> Size</label> 

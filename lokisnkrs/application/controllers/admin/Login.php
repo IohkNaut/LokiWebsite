@@ -26,7 +26,7 @@ class Login extends MY_Controller {
 		if($this->admin_model->check_exists($where)) {
 			return true;
 		}
-		$this->form_validation->set_message(__FUNCTION__, '* Tên đăng nhập hoặc mật khẩu sai!');
+		$this->form_validation->set_message(__FUNCTION__, '* Tên đăng nhập hoặc mật khẩu không đúng!');
 		return false;
 	}
 }

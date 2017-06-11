@@ -6,7 +6,7 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="index.php?view=all&page=1">Tất cả sản phẩm</a>
+            	<a data-parent="#accordion" href="<?php echo base_url('product/all_product'); ?>">Tất cả sản phẩm</a>
             </div>
     	</div>
     </div>
@@ -14,7 +14,7 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="index.php?view=new&page=1">Hàng mới về</a>
+            	<a data-parent="#accordion" href="<?php echo base_url('product/new_arrival'); ?>">Hàng mới về</a>
             </div>
     	</div>
     </div>
@@ -22,7 +22,7 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="index.php?view=best&page=1">Sản phẩm bán chạy</a>
+            	<a data-parent="#accordion" href="<?php echo base_url('product/best_seller'); ?>">Sản phẩm bán chạy</a>
             </div>
     	</div>
     </div>
@@ -30,33 +30,45 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="index.php?view=sale&page=1">Sản phẩm giảm giá</a>
+            	<a data-parent="#accordion" href="<?php echo base_url('product/discount'); ?>">Sản phẩm giảm giá</a>
             </div>
     	</div>
     </div>
-                     
+    
+    <?php
+	$num = 0; 
+	foreach($catalog_list as $row): 
+		if(count($row->subs) > 1):
+	?>                 
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-toggle="collapse" data-parent="#accordion" href="#<?php //echo $num ?>" style="text-transform:capitalize;">
-				<?php //echo $row_catalog['catalog_name'] ?><span class="caret"></span></a>
+            	<a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $num ?>" style="text-transform:capitalize;">
+				<?php echo $row->catalog_name ?><span class="caret"></span></a>
             </div>
         </div>
         
-        <div id="<?php //echo $num ?>" class="panel-collapse collapse">
+        <div id="<?php echo $num ?>" class="panel-collapse collapse">
         	<ul class="list-group">
-            	<?php
-					//while ($row_child = mysql_fetch_array($query_child)) {
-				?>
-            	<li class="list-group-item"><a href="index.php?view=details_type&id=<?php //echo $row_child['catalog_id'] ?>" style="color:#000;text-transform:capitalize;">
-				<?php //echo $row_child['catalog_name'] ?></a></li>
+ 				<?php foreach ($row->subs as $subs):?>
+            	<li class="list-group-item"><a href="<?php echo base_url('product/catalog/'.$subs->catalog_id); ?>" style="color:#000;text-transform:capitalize;">
+				<?php echo $subs->catalog_name ?></a></li>
                 <?php 
-				//$num += 1;
-				//} ?>
+				$num += 1;
+				endforeach; ?>
         	</ul>
      	</div>
    	</div>
-
+    	<?php else: ?>
+    <div class="panel panel-default">
+    	<div class="panel-heading">
+        	<div class="panel-title" style="font-size: 14px;">
+            	<a data-parent="#accordion" href="<?php echo base_url('product/catalog/'.$row->catalog_id); ?>"><?php echo $row->catalog_name;?></a>
+            </div>
+    	</div>
+    </div>    
+        <?php endif;?>
+	<?php endforeach; ?>
     <br />                     
     
 </div>

@@ -16,8 +16,9 @@
                     <li class="dropdown">
                     	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Đơn hàng <span class="caret"></span></a>
                       	<ul class="dropdown-menu">
-                        	<li><a href="<?php echo admin_url('order');?>">Đơn hàng mới</a></li>
-                            <li><a href="<?php echo admin_url('admin');?>">Tất cả đơn hàng</a></li>
+                        	<li><a href="<?php echo admin_url('order/new_order');?>">Đơn hàng mới</a></li>
+                            <li><a href="<?php echo admin_url('order');?>">Tất cả đơn hàng</a></li>
+                            <li><a href="<?php echo admin_url('order/cancel_order');?>">Đơn hàng đã huỷ</a></li>
                       	</ul>
                     </li>
                 </ul>
