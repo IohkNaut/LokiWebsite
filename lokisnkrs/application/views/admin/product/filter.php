@@ -3,7 +3,7 @@
       	<div class="form-group">
         	<label for="inputEmail3" class="col-sm-2 control-label">Mã sản phẩm</label>
         	<div class="col-md-2">
-          		<input type="number" class="form-control" id="inputEmail3" placeholder="Tìm mã SP" name="id">
+          		<input type="number" class="form-control" value="<?php echo $this->input->get('id');?>" placeholder="Tìm mã SP" name="id">
         	</div>
         	
             <label for="inputPassword3" class="col-sm-2 control-label">Loại sản phẩm</label>
@@ -16,11 +16,11 @@
 				?>
                 	<optgroup label="<?php echo $row->catalog_name ?>">
                     	<?php foreach ($row->subs as $subs):?>
-                        <option style="text-transform:capitalize;" value=<?php echo $subs->catalog_id?>><?php echo $subs->catalog_name ?></option>
+                        <option <?php echo ($this->input->get('catalog') == $subs->catalog_id) ? "selected" : ''?> style="text-transform:capitalize;" value=<?php echo $subs->catalog_id?>><?php echo $subs->catalog_name ?></option>
                         <?php endforeach;?>
                     </optgroup>
                 <?php else: ?>
-                    <option style="text-transform:capitalize;" value=<?php echo $row->catalog_id?> ><?php echo $row->catalog_name ?></option>
+                    <option <?php echo ($this->input->get('catalog') == $row->catalog_id) ? "selected" : ''?> style="text-transform:capitalize;" value=<?php echo $row->catalog_id?> ><?php echo $row->catalog_name ?></option>
                 <?php 
 					endif;
 				endforeach;?>
@@ -31,7 +31,7 @@
         <div class="form-group">
         	<label for="inputPassword3" class="col-sm-2 control-label">Tên sản phẩm</label>
         	<div class="col-md-5">
-          		<input type="text" class="form-control" id="inputPassword3" placeholder="Tìm tên sản phẩm" name="name">
+          		<input type="text" class="form-control" value="<?php echo $this->input->get('name');?>" placeholder="Tìm tên sản phẩm" name="name">
         	</div>
             <button type="submit" class="btn btn-primary"> Lọc </button>
             <a href="<?php echo admin_url('product')?>"><button type="button" class="btn btn-default">Reset</button></a>

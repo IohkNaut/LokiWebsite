@@ -6,8 +6,56 @@ class Order extends MY_Controller {
 		$this->load->library('cart');
 		$this->load->library('form_validation');
 		$this->load->helper('form');
+		$this->load->model('order_model');
 	}
 	
+	//thong tin don hang o trang khach hang
+	function info() {
+		$member_id = $this->session->userdata('login_member');
+		$input = array();
+		$input['where'] = array('member_id' => $member_id);
+		$list = $this->order_model->get_list($input);
+		$this->load->model('order_detail_model');
+		$this->load->model('product_model');
+		foreach($list as $row) {
+			$input['where'] = array('orders_id' => $row->orders_id);
+			$subs = $this->order_detail_model->get_list($input);
+			foreach($subs as $dt) {
+				$product = $this->product_model->get_info($dt->product_id);
+				$dt->product_name = $product->product_name;
+				$dt->image = $product->image;
+			}
+			$row->subs = $subs;
+		}
+		$this->data['message'] = $this->session->flashdata('message');
+		$this->data['list'] = $list;
+		$this->data['temp'] = 'site/order/info';
+		$this->load->view('site/layout', $this->data);
+	}
+	
+	
+	//huy don hang
+	function cancel() {
+		$id = $this->uri->rsegment('3');
+		$id = intval($id);
+		$info = $this->order_model->get_info($id);
+		if(!$info) {
+			$this->session->set_flashdata('message', 'Không tồn tại dữ liệu!');
+			redirect(base_url('order/info'));
+		} else {
+			$data = array (
+				'status_payment' => 2,
+				'status_shipment' => 2,
+				'status' => 2
+			);
+			
+			$this->order_model->update($id, $data);
+			$this->session->set_flashdata('message', 'Huỷ đơn hàng thành công!');
+			redirect(base_url('order/info'));
+		}
+	}
+
+	//THANH TOAN GIO HANG
 	function checkout() {
 		//thong tin gio hang
 		$cart = $this->cart->contents();
@@ -63,7 +111,7 @@ class Order extends MY_Controller {
 				}
 				
 				//them vao bang don hang
-				$this->load->model('order_model');
+				
 				if($this->order_model->create($data)) {
 					$orders_id = $this->db->insert_id();//lay id cua don hang vua them vao 
 					//them vao bang chi tiet don hang
@@ -83,11 +131,16 @@ class Order extends MY_Controller {
 				
 				//xoa gio hang
 				$this->cart->destroy();
+				
+				//neu thanh toan tien mat
 				if($payment == 'tienmat') {
 					$this->session->set_flashdata('message', 'Bạn đã đặt hàng thành công! LokiSneaker sẽ liên hệ bạn trong thời gian sớm nhất!');
 					redirect(base_url());
-				} else {
-					
+				} elseif($payment == 'baokim') { //thanh toan truc tuyen
+					//load thu vien thanh toan
+					$this->load->library('payment/baokim_payment');
+					//chuyen sang cong thanh toan
+					$this->baokim_payment->payment($orders_id, $total_cost);
 				}
 			} 
 		}
@@ -96,14 +149,49 @@ class Order extends MY_Controller {
 		$this->load->view('site/layout', $this->data);
 	}
 	
-	//thong tin don hang o trang khach hang
-	function info() {
-	
-	}
-	
-	
-	//huy don hang
-	function cancel() {
+	//Nhan ket qua tra ve tu cong thanh toan
+	function result() {
+		//load thu vien thanh toan
+		$this->load->library('payment/Baokim_payment');
+		$this->load->model('order_model');
 		
+		//id cua don hang
+		$order_id = $this->input->post($order_id);
+		//lay thong tin cua don hang
+		$order = $this->order_model->get_info($order_id);
+		
+		if(!$order) {
+			redirect();
+		}
+		
+		//goi ham kiem tra trang thai thanh toan ben bao kim
+		$status = $this->baokim_payment->result($order_id, $order->cost);
+		if($status == true) {
+			//cap nhat lai trang thai don hang la da thanh toan
+			$data = array();
+			$data['status_payment'] = 1;
+			$this->order_model->update($order_id, $data);
+		} elseif ($status == false) {
+			//cap nhat trang thai don hang la khong thanh toan
+			$data = array();
+			$data['status_payment'] = 2;
+			$this->order_model->update($order_id, $data);
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

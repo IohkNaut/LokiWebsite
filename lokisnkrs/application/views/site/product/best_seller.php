@@ -8,8 +8,7 @@
 			if($row->discount > 0):
 	?>
     <div class="col-md-3">
-    					<span class="label label-danger" style="font-size:12px;">Sale <?php echo $row->discount ?>%</span>
-                        <span class="label label-primary" style="font-size:12px;">HOT</span>
+                        <span class="label label-danger" style="font-size:12px;">HOT</span>
         <div class="thumbnail"> 
             <div class="caption"> 
                 <h4 style=" text-transform:capitalize;"><?php echo $row->product_name ?></h4>

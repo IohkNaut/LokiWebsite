@@ -17,6 +17,15 @@
     <input class="form-control" name="pw_retype" type="password" style="margin-top:10px;" required="required">
     <div name="pwrt_error" style="font-size:12px; color:#F00;"><?php echo form_error('pw_retype');?></div>
     
+    <label for="" style="margin-top:12px;">Phân quyền</label> <br/>
+    <div class="row">
+
+    <?php foreach ($config_permission as $controller => $actions):?>
+    	<div class="col-md-4">
+       	<input name="permission[<?php echo $controller?>]" value="index" type="checkbox" style="margin-top:10px;" ><strong style="text-transform:capitalize;"> <?php echo $controller?></strong>
+    </div>
+    <?php endforeach;?>
+    </div>
     <button class="btn btn-primary col-xs-12 col-md-12 col-sm-12" type="submit" name="btn_insert" style="margin-top:18px;margin-bottom:13px;">Thêm</button>
     <span></span> 
 </form>  

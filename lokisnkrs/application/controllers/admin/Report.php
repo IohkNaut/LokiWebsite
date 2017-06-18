@@ -6,6 +6,15 @@ class Report extends MY_Controller {
 		$this->load->model('product_model');
 	}
 	
+	function index() {
+		$username = $this->session->userdata('login_admin');
+		$this->load->model('admin_model');
+		$admin = $this->admin_model->get_info_rule(array('username' => $username));
+		$this->data['admin_name'] = $admin->admin_name;
+		$this->data['temp'] = 'admin/report/index';
+		$this->load->view('admin/main', $this->data);
+	}
+	
 	function order() {
 		
 		$order_id = $this->uri->rsegment('3');

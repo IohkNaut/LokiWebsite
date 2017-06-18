@@ -1,85 +1,17 @@
-<div class="container" style="border: #999 solid 2px;">
-    <div class="sidebar col-md-4 col-sm-4 col-xs-12" style="float:left;">	
-        <img src="<?php echo base_url();?>/upload/large.png"/>
-    </div>
-    
-    <div class="content col-md-8 col-sm-8 col-xs-12" style="float:right;">
-        <div class="alert alert-info" style="padding-left:30px; margin-top:20px; font-weight:bold; font-size:20px; " role="alert">Chàoo <?php echo $admin_name;?>!!!<br />Bạn xem báo cáo hôm nay chưa????</div>
-        
-        <div class="alert alert-warning" style="padding-left:30px; margin-top:20px; font-weight:bold; font-size:16px; " role="alert">
-        
-            <form action="<?php echo(admin_url('report/inventory'))?>" enctype="multipart/form-data" method="get" class="form-horizontal" role="form" >
-                <i class="glyphicon glyphicon-chevron-right"></i>
-                <label for="" style="margin-left:5px;"> Báo cáo tồn kho </label>  
-                <i class="glyphicon glyphicon-hand-right" style="margin-left:5px;"></i>
-                <button class="btn btn-primary " style="margin-left:10px;" type="submit" >Xem báo cáo</button> 
-                <br />
-            </form>
-            
-            <br />
-            <br />
-            
-            <form action="<?php echo(admin_url('report/outofstock'))?>" enctype="multipart/form-data" method="get" class="form-horizontal" role="form" >
-                <i class="glyphicon glyphicon-chevron-right"></i>
-                <label for="" style="margin-left:5px;"> Báo cáo sản phẩm đã hết hàng </label>  
-                <i class="glyphicon glyphicon-hand-right" style="margin-left:5px;"></i>
-                <button class="btn btn-primary " style="margin-left:10px;" type="submit" >Xem báo cáo</button> 
-                <br />
-            </form>
-            
-            <br />
-            <br />
-            
-            <form action="<?php echo(admin_url('report/revenue_month'))?>" enctype="multipart/form-data" method="get" class="form-horizontal" role="form" >
-                <i class="glyphicon glyphicon-chevron-right"></i>
-                <label for="" style="margin-left:5px;"> Báo cáo doanh thu tháng </label> 
-                <select id="catalog_select" name="month" style=" text-align:center;height:30px; margin-top:5px;
-                                                                                border-radius:4px;font-size:15px; margin-left:5px;">
-                    <?php
-                        $i = 1;
-                        while($i < 13) {
-                    ?>
-                    <option style="text-transform:capitalize;" value=<?php echo $i?> ><?php echo $i?></option>
-                    <?php
-                        $i++;
-                        }
-                    ?>
-                </select>
-                <label for="" style="margin-left:5px;"> năm </label> 
-                <select id="catalog_select" name="year" style=" text-align:center;height:30px; margin-top:5px;
-                                                                                border-radius:4px;font-size:15px; margin-left:5px;">
-                    <?php
-                        $i = date(Y);
-                        while($i > 2009) {
-                    ?>
-                    <option style="text-transform:capitalize;" value=<?php echo $i?> ><?php echo $i?></option>
-                    <?php
-                        $i--;
-                        }
-                    ?>
-                </select>
-                <i class="glyphicon glyphicon-hand-right" style="margin-left:5px;"></i>
-                <button class="btn btn-primary " style="margin-left:10px;" type="submit" >Xem báo cáo</button> 
-                <br />
-            </form>
-            
-            <br />
-            <br />
-            
-            <form action="<?php echo(admin_url('report/revenue_day'))?>" enctype="multipart/form-data" method="get" class="form-inline" role="form" >
-                <i class="glyphicon glyphicon-chevron-right"></i>
-                <label for="" style="margin-left:5px;"> Báo cáo doanh thu ngày </label> 
-                <input name="day" type="date" style="text-align:center;height:30px; margin-top:5px;
-                                                                                border-radius:4px;font-size:15px;margin-left:5px;">
-                <i class="glyphicon glyphicon-hand-right" style="margin-left:5px;"></i>
-                <button class="btn btn-primary " style="margin-left:10px;" type="submit" >Xem báo cáo</button> 
-                <br />
-            </form>
-            
-            <br />
-            
-        </div>
-        
-    </div>
-</div>
-        
+<div class="container-fluid">
+	<?php
+		$this->load->view('admin/message');
+	?>
+	<div align="center" align="center" class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2" 
+    style=" height:70px; margin-top:20px; border: #000 dashed 2px">
+    	<h2><strong style="">Xin chào, <?php echo $admin_name?>!</strong></h2>
+    </div><br />
+	<h3 align="center" class="col-md-12 col-sm-12 col-xs-12" style="margin-top:40px;"><strong>CỬA HÀNG GIÀY THỂ THAO LOKISNEAKER</strong></h3>
+    <h3 align="center" class="col-md-12 col-sm-12 col-xs-12"><strong>__Uy tín dựa trên chất lượng__</strong></h3>
+	<center><p class="col-md-12 col-sm-12 col-xs-12" style="font-size:16px;"><br/>---------------------------------------------------------------------------------------------<br/><br/>
+    Được thành lập từ năm 2014, LokiSneaker ngày càng được biết đến như một cửa hàng uy tín chuyên các loại hàng chính hãng ( originals / authentic ) của các thương hiệu nổi tiếng trên thế giới: Nike, Adidas, Lacoste, DC, Fox, Vans, Reebok, NewBalance, Columbia,... với chất lượng đảm bảo và giá cả cạnh tranh nhất.<br/><br/>
+    LokiSneaker xin cam kết chỉ bán hàng chính hãng - FAKE xin tặng luôn giày, đền tiền x10 , giao hàng đúng hạn và kịp thời cho khách hàng ở xa, phục vụ khách hàng cả trước và sau khi mua hàng.<br/>
+    </p></center></div>
+    <center><img src="<?php echo base_url()?>upload/pt2.png" width="566" height="234"></center>
+
+                    

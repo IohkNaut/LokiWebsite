@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2017 at 09:47 AM
+-- Generation Time: Jun 18, 2017 at 09:37 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -20,7 +20,6 @@ SET time_zone = "+00:00";
 -- Database: `lokisneaker`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -31,19 +30,21 @@ CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
   `admin_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `password` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `permission` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `admin_name`, `username`, `password`) VALUES
-(1, 'Võ Tuấn Khôi', 'khoi', '111'),
-(2, 'khôi đẹp trai', 'tuankhoi', '123'),
-(3, 'Trần Khánh Linh', 'linhlu', '123'),
-(4, 'Trần Khánh Linh', 'khanhlinh', '123'),
-(5, 'Trần Khánh Linh', 'linhtran', '123');
+INSERT INTO `admin` (`admin_id`, `admin_name`, `username`, `password`, `permission`) VALUES
+(1, 'Võ Tuấn Khôi', 'khoi', '111', ''),
+(2, 'khôi đẹp trai', 'tuankhoi', '123', ''),
+(3, 'Trần Khánh Linh', 'linhlu', '123', ''),
+(4, 'Trần Khánh Linh', 'khanhlinh', '123', ''),
+(5, 'Trần Khánh Linh', 'linhtran', '123', ''),
+(6, 'Linh Tran', 'trankhanhlinh', '123', '{"catalog":"index","product":"index","report":"index"}');
 
 -- --------------------------------------------------------
 
@@ -109,7 +110,7 @@ INSERT INTO `member` (`member_id`, `member_name`, `gender`, `dob`, `phone`, `add
 (2, 'Nguyễn Định Luật', 1, '1985-05-31', '0908123456', 'KTX Khu B, Binh Duong', 'luat@gmail.com', '123'),
 (3, 'Phạm Thị Hoa', 1, '1992-05-31', '0907123456', 'KTX Khu B, Binh Duong', 'hoa@gmail.com', '123'),
 (4, 'Trần Ngọc Bảo', 0, '1989-05-31', '0906123456', 'KTX Khu B, Binh Duong', 'bao@gmail.com', '123'),
-(5, 'Phạm Lan Hương', 1, '1985-05-31', '0905123456', 'KTX Khu B, Binh Duong', 'huong@gmail.com', '123');
+(5, 'Phạm Lan Hương', 1, '1985-05-31', '09051234560', 'KTX Khu B, Binh Duong', 'huong@gmail.com', '123');
 
 -- --------------------------------------------------------
 
@@ -167,22 +168,53 @@ CREATE TABLE `orders` (
   `payment_info` text COLLATE utf8_unicode_ci,
   `note` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status_payment` int(11) NOT NULL,
-  `status_shipment` int(11) NOT NULL
+  `status_shipment` int(11) NOT NULL,
+  `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orders_id`, `member_id`, `name`, `email`, `phone`, `address`, `date`, `cost`, `payment`, `payment_info`, `note`, `status_payment`, `status_shipment`) VALUES
-(1, 1, 'Nguyễn Hoàng Dung', 'dung@gmail.com', '0909123456', 'KTX Khu B, Binh Duong, Viet Nam', '2017-06-11 05:01:52', 7500000, 'tienmat', NULL, 'giao hàng giờ hành chính nha', 1, 1);
+INSERT INTO `orders` (`orders_id`, `member_id`, `name`, `email`, `phone`, `address`, `date`, `cost`, `payment`, `payment_info`, `note`, `status_payment`, `status_shipment`, `status`) VALUES
+(1, 1, 'Nguyễn Hoàng Dung', 'dung@gmail.com', '0909123456', 'KTX Khu B, Binh Duong, Viet Nam', '2017-06-18 00:56:25', 7500000, 'tienmat', NULL, 'giao hàng giờ hành chính nha', 1, 1, 1),
+(2, 2, 'Nguyễn Định Luật', 'luat@gmail.com', '0908123456', 'ktx khu A', '2017-06-18 00:56:32', 6000000, 'tienmat', 'giao hàng lúc 8h', NULL, 1, 0, 0),
+(3, 2, 'Nguyễn Định Luật', 'luat@gmail.com', '0908123456', 'KTX Khu B, Binh Duong', '2017-06-18 01:38:54', 1700000, 'baokim', NULL, NULL, 1, 1, 1),
+(4, 2, 'Nguyễn Định Luật', 'luat@gmail.com', '0908123456', 'KTX Khu B, Binh Duong', '2017-06-18 02:07:51', 2500000, 'baokim', 'giao hàng vào chủ nhật', NULL, 2, 2, 2),
+(5, 1, 'Nguyễn Hoàng Dung', 'dung@gmail.com', '0909123456', 'KTX Khu B, Binh Duong', '2017-06-18 02:57:49', 11475000, 'nganluong', NULL, 'gọi trước khi giao', 0, 0, 0),
+(6, 1, 'Nguyễn Hoàng Dung', 'dung@gmail.com', '0909123456', 'KTX Khu B, Binh Duong', '2017-06-18 02:59:23', 7875000, 'tienmat', NULL, 'gọi trước khi giao', 0, 0, 0),
+(7, 1, 'Nguyễn Hoàng Dung', 'dung@gmail.com', '0909123456', 'KTX Khu B, Binh Duong', '2017-06-18 03:00:13', 8550000, 'nganluong', NULL, 'gói hàng cẩn thận', 0, 0, 0),
+(8, 3, 'Phạm Thị Hoa', 'hoa@gmail.com', '0907123456', 'KTX Khu B, Binh Duong', '2017-06-18 03:02:25', 6525000, 'tienmat', NULL, NULL, 0, 0, 0),
+(9, 3, 'Phạm Thị Hoa', 'hoa@gmail.com', '0907123456', 'KTX Khu B, Binh Duong', '2017-06-18 03:02:50', 4275000, 'nganluong', NULL, NULL, 0, 0, 0),
+(10, 3, 'Phạm Thị Hoa', 'hoa@gmail.com', '0907123456', 'KTX Khu B, Binh Duong', '2017-06-18 03:11:04', 4275000, 'nganluong', NULL, NULL, 0, 0, 0),
+(11, 4, 'Trần Ngọc Bảo', 'bao@gmail.com', '0906123456', 'KTX Khu B, Binh Duong', '2017-06-18 09:53:25', 4275000, 'nganluong', NULL, NULL, 0, 0, 0),
+(12, 4, 'Trần Ngọc Bảo', 'bao@gmail.com', '0906123456', 'KTX Khu B, Binh Duong', '2017-06-18 09:58:43', 4275000, 'baokim', NULL, NULL, 0, 0, 0),
+(13, 4, 'Trần Ngọc Bảo', 'bao@gmail.com', '0906123456', 'KTX Khu B, Binh Duong', '2017-06-18 10:00:00', 2850000, 'baokim', NULL, NULL, 0, 0, 0),
+(14, 4, 'Trần Ngọc Bảo', 'bao@gmail.com', '0906123456', 'KTX Khu B, Binh Duong', '2017-06-18 10:38:18', 1700000, 'baokim', NULL, NULL, 0, 0, 0);
 
 --
 -- Triggers `orders`
 --
 DELIMITER $$
+CREATE TRIGGER `trigger_orders_ins` BEFORE INSERT ON `orders` FOR EACH ROW BEGIN
+	set new.date = now();
+    set new.status_payment = 0;
+    set new.status = 0;
+END
+$$
+DELIMITER ;
+DELIMITER $$
 CREATE TRIGGER `trigger_orders_upd` BEFORE UPDATE ON `orders` FOR EACH ROW BEGIN
 	set new.date = now();
+    if(new.status_payment = 0 and new.status_shipment = 0)  then
+    	set new.status = 0;
+    END if;
+    IF (new.status_payment = 1 and new.status_shipment = 1) then
+    	set new.status = 1;
+     END if;
+    IF (new.status_payment = 2 or new.status_shipment = 2) then
+    	set new.status = 2;
+    end if;
 END
 $$
 DELIMITER ;
@@ -208,7 +240,24 @@ CREATE TABLE `orders_detail` (
 
 INSERT INTO `orders_detail` (`od_detail_id`, `orders_id`, `product_id`, `product_size`, `price`, `quantity`) VALUES
 (1, 1, 13, 37, 4500000, 1),
-(2, 1, 18, 37, 3000000, 1);
+(2, 1, 18, 37, 3000000, 1),
+(3, 2, 10, 43, 3000000, 2),
+(4, 2, 8, 43, 3000000, 1),
+(5, 3, 9, 44, 1700000, 1),
+(6, 4, 7, 41, 2500000, 1),
+(7, 5, 1, 35, 7200000, 1),
+(8, 5, 17, 36, 4275000, 1),
+(9, 6, 17, 36, 4275000, 1),
+(10, 6, 5, 46, 3600000, 1),
+(11, 7, 6, 39, 4275000, 2),
+(12, 8, 11, 41, 3325000, 1),
+(13, 8, 3, 42, 3200000, 1),
+(14, 9, 6, 39, 4275000, 1),
+(15, 10, 6, 39, 4275000, 1),
+(16, 11, 17, 36, 4275000, 1),
+(17, 12, 6, 39, 4275000, 1),
+(18, 13, 2, 43, 2850000, 1),
+(19, 14, 12, 41, 1700000, 1);
 
 -- --------------------------------------------------------
 
@@ -235,23 +284,23 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `catalog_id`, `product_name`, `price`, `description`, `discount`, `final_price`, `image`, `image_list`, `date`, `view`) VALUES
-(1, 5, 'Adidas Yeezy Boost 350 - Moonrock', 8000000, '<p>Thiết kế Yeezy l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Yeezy&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 10, 7200000, 'yeezy_moonrock.jpg', '["yeezy_moonrock2.jpg","yeezy_moonrock3.jpg","yeezy_moonrock4.jpg","yeezy_moonrock5.jpg"]', '2017-04-13', 0),
-(2, 6, 'Tubular Radial', 3000000, '<p>Thiết kế Tubular l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Tubular&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 5, 2850000, 'tubular_radial2.jpg', '["tubular_radial1.jpg","tubular_radial3.jpg","tubular_radial4.jpg"]', '2017-04-03', 0),
-(3, 7, 'NMD NOIR BLEU ROUGE', 4000000, '<p>Thiết kế NMD l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng NMD đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 20, 3200000, 'nmd_noir.jpg', '["nmd_noir1.jpg","nmd_noir2.jpg","nmd_noir3.jpg"]', '2017-04-26', 0),
+(1, 5, 'Adidas Yeezy Boost 350 - Moonrock', 8000000, '<p>Thiết kế Yeezy l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Yeezy&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 10, 7200000, 'yeezy_moonrock.jpg', '["yeezy_moonrock2.jpg","yeezy_moonrock3.jpg","yeezy_moonrock4.jpg","yeezy_moonrock5.jpg"]', '2017-04-13', 1),
+(2, 6, 'Tubular Radial', 3000000, '<p>Thiết kế Tubular l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Tubular&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 5, 2850000, 'tubular_radial2.jpg', '["tubular_radial1.jpg","tubular_radial3.jpg","tubular_radial4.jpg"]', '2017-04-03', 1),
+(3, 7, 'NMD NOIR BLEU ROUGE', 4000000, '<p>Thiết kế NMD l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng NMD đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 20, 3200000, 'nmd_noir.jpg', '["nmd_noir1.jpg","nmd_noir2.jpg","nmd_noir3.jpg"]', '2017-04-26', 1),
 (4, 8, 'ULTRA BOOST TRIPLE WHITE', 3500000, '<p>Thiết kế Ultra Boost&nbsp;l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Ultra Boost&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 10, 3150000, 'b5.jpg', '["b1.jpg","b3.jpg","b4.jpg"]', '2017-04-13', 0),
-(5, 6, 'tubular shadow knit', 3600000, '<p>Thiết kế Tubular&nbsp;l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Tubular&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 3600000, 'shadow1.jpg', '["shadow2.jpg","shadow3.jpg"]', '2017-05-26', 0),
-(6, 7, 'NMD ROSE', 4500000, 'Thiết kế NMD là 1 dòng giày thuộc Adidas, lấy tiêu chí chủ đạo là phục vụ cho các vận động viên hay người đi bộ và cả những fashionista, dòng NMD đã ra đời. Với thiết kế nhẹ, êm, nhưng vẫn đảm bảo tính thời trang đem lại cảm giác đầy sức mạnh trong mỗi bước đi đã sớm trở thành sự lựa chọn cho nhiều người trên khắp thế giới và phát triển mỗi ngày.', 0, 4500000, 'nmd_rose.jpg', '["nmd_rose1.jpg","nmd_rose2.jpg","nmd_rose3.jpg","nmd_rose4.jpg"]', '2017-04-04', 4),
-(7, 10, 'ASICS GEL LYTE V', 2500000, '<p>Thiết kế GEL LYTE V l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng GEL LYTE V đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 2500000, 'scarpe_(2).jpg', '["scarpe_(1).jpg","scarpe.jpg","scarpe1.jpg"]', '2017-04-20', 0),
-(8, 15, 'HURACHE 2017 BLACK', 3000000, '<p>Thiết kế HURACHE l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Nike, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng HURACHE&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 3000000, 'hua_(4).jpg', '["hua_(1).jpg","hua_(2).jpg","hua_(3).jpg"]', '2017-05-26', 0),
-(9, 13, 'Chuck II Shield Canvas', 1700000, '<p>Thiết kế Chuck II l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Converse, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Chuck II đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 1700000, 'white_(3).jpg', '["white_(1).jpg","white_(1).png","white_(2).jpg"]', '2017-05-26', 0),
-(10, 9, 'ASICS Men GEL LYTE III', 3000000, '<p>Thiết kế GEL LYTE III l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng GEL LYTE III đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 3000000, 'as1.jpg', '["as.jpg","as2.jpg","as3.jpg","as4.jpg"]', '2017-05-28', 4),
-(11, 14, 'Nike Air Max Neon', 3500000, '<p>Thiết kế Air Max l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Nike, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Air Max đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 5, 3325000, 'air_(1).jpg', '["air_(2).jpg","air_(3).jpg","air_(4).jpg"]', '2017-05-28', 0),
-(12, 12, 'Converse Chuck Taylor Leather', 1700000, '<p>Thiết kế Chuck Taylor l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Converse, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Chuck Taylor&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 1700000, 'leader_(2).jpg', '["leader_(1).jpg"]', '2017-05-28', 0),
+(5, 6, 'tubular shadow knit', 3600000, '<p>Thiết kế Tubular&nbsp;l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Tubular&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 3600000, 'shadow1.jpg', '["shadow2.jpg","shadow3.jpg"]', '2017-05-26', 1),
+(6, 7, 'NMD ROSE', 4500000, '<p>Thiết kế NMD l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng NMD đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 5, 4275000, 'nmd_rose.jpg', '["nmd_rose1.jpg","nmd_rose2.jpg","nmd_rose3.jpg","nmd_rose4.jpg"]', '2017-04-04', 8),
+(7, 10, 'ASICS GEL LYTE V', 2500000, '<p>Thiết kế GEL LYTE V l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng GEL LYTE V đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 2500000, 'scarpe_(2).jpg', '["scarpe_(1).jpg","scarpe.jpg","scarpe1.jpg"]', '2017-04-20', 1),
+(8, 15, 'HURACHE 2017 BLACK', 3000000, '<p>Thiết kế HURACHE l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Nike, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng HURACHE&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 3000000, 'hua_(4).jpg', '["hua_(1).jpg","hua_(2).jpg","hua_(3).jpg"]', '2017-05-26', 1),
+(9, 13, 'Chuck II Shield Canvas', 1700000, '<p>Thiết kế Chuck II l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Converse, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Chuck II đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 1700000, 'white_(3).jpg', '["white_(1).jpg","white_(1).png","white_(2).jpg"]', '2017-05-26', 1),
+(10, 9, 'ASICS Men GEL LYTE III', 3000000, '<p>Thiết kế GEL LYTE III l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng GEL LYTE III đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 3000000, 'as1.jpg', '["as.jpg","as2.jpg","as3.jpg","as4.jpg"]', '2017-05-28', 5),
+(11, 14, 'Nike Air Max Neon', 3500000, '<p>Thiết kế Air Max l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Nike, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Air Max đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 5, 3325000, 'air_(1).jpg', '["air_(2).jpg","air_(3).jpg","air_(4).jpg"]', '2017-05-28', 1),
+(12, 12, 'Converse Chuck Taylor Leather', 1700000, '<p>Thiết kế Chuck Taylor l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Converse, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Chuck Taylor&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 1700000, 'leader_(2).jpg', '["leader_(1).jpg"]', '2017-05-28', 1),
 (13, 11, 'Converse 1970s Black', 1700000, '<p>Thiết kế Chuck II l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Converse, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Chuck II đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 1700000, 'cv4.jpg', '["cv1.jpg","cv2.jpg","cv3.jpg"]', '2017-05-28', 0),
 (14, 16, 'Nike Jordan 11', 5500000, '<p>Thiết kế Jordan l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Nike, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Jordan đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 5500000, 'aaaa.png', '["a.jpg","aa.jpg"]', '2017-05-28', 0),
 (15, 18, 'Vans Old Skool Burgundy', 1300000, '<p>Thiết kế Old Skool l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Vans, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Old Skool đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 1300000, 'cccc.jpg', '["c.jpg","cc.jpg","ccc.jpg"]', '2017-05-28', 0),
 (16, 19, 'Vans Sk8 Yellow Zip', 2000000, '<p>Thiết kế Sk8 l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Vans, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Sk8 đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 2000000, 'q.jpg', '["qq.jpg","qqq.jpg","qqqq.jpg","qqqqq.jpg"]', '2017-05-28', 0),
-(17, 8, 'Adidas Ultra Boost Powder', 4500000, '<p>Thiết kế Ultra Boost l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Ultra Boost&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 0, 4500000, 'powder_(2).jpg', '["powder_(1).jpg","powder_(3).jpg"]', '2017-05-28', 4),
+(17, 8, 'Adidas Ultra Boost Powder', 4500000, '<p>Thiết kế Ultra Boost l&agrave; 1 d&ograve;ng gi&agrave;y thuộc Adidas, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Ultra Boost&nbsp;đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh sự lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 5, 4275000, 'powder_(2).jpg', '["powder_(1).jpg","powder_(3).jpg"]', '2017-06-11', 7),
 (18, 10, 'Asics Gel Lyte V - Prickly Pear', 3500000, '<p>Thiết kế Asics Gel Lyte V l&agrave; một d&ograve;ng gi&agrave;y thuộc Asics, lấy ti&ecirc;u ch&iacute; chủ đạo l&agrave; phục vụ cho c&aacute;c vận động vi&ecirc;n hay người đi bộ v&agrave; cả những fashionista, d&ograve;ng Asics Gel Lyte V đ&atilde; ra đời. Với thiết kế nhẹ, &ecirc;m, nhưng vẫn đảm bảo t&iacute;nh thời trang đem lại cảm gi&aacute;c đầy sức mạnh trong mỗi bước đi đ&atilde; sớm trở th&agrave;nh lựa chọn cho nhiều người tr&ecirc;n khắp thế giới v&agrave; ph&aacute;t triển mỗi ng&agrave;y.</p>', 10, 3150000, 'pricky-pear.jpg', '["prickly-pear5_(1).jpg","prickly-pear5_(2).jpg","prickly-pear5_(3).jpg","prickly-pear5_(4).jpg"]', '2017-06-07', 6);
 
 --
@@ -326,7 +375,7 @@ INSERT INTO `product_detail` (`pd_detail_id`, `product_id`, `size`, `quantity`) 
 (41, 8, 40, 5),
 (42, 8, 41, 5),
 (43, 8, 42, 5),
-(44, 8, 43, 5),
+(44, 8, 43, 3),
 (45, 9, 41, 3),
 (46, 9, 42, 5),
 (47, 9, 43, 4),
@@ -443,7 +492,7 @@ ALTER TABLE `product_detail`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `catalog`
 --
@@ -463,12 +512,12 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  MODIFY `od_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `od_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `product`
 --

@@ -65,10 +65,14 @@
             
     <section class="row" id="tintuc"> <!---TIN TUC-->
         <h3 align="center" class="col-md-12 col-sm-12 col-xs-12"><a href="#"><strong>TIN TỨC</strong></a></h3>
+        <div class="row" ></div>
+    	<br />
         <div id="news-slider" class="owl-carousel owl-theme" style="opacity: 1; display: block;"> 
-            <div class="owl-wrapper-outer"><div class="owl-wrapper" style="left: 0px; display: block;">   
+            <div class="owl-wrapper-outer">
+            <div class="owl-wrapper" style="left: 0px; display: block;">   
 		<?php foreach($news_list as $news): ?>
-                <div class="owl-item col-md-4 col-sm-4 col-xs-12"><div class="post-slide"> 
+                <div class="owl-item col-md-4 col-sm-4 col-xs-12">
+                <div class="post-slide"> 
                     <div class="post-img"> <span class="over-layer"></span> 
                         <img src="<?php echo base_url();?>upload/news/<?php echo $news->image?>" style="height:150px;"> 
                     </div> 
@@ -76,7 +80,7 @@
                     </h3> <span>Ngày đăng: <?php echo date("d/m/Y - H:i:s", strtotime($news->date));?></span> 
                 </div></div>
         <?php endforeach;?>        
-                </div></div>
+                </div>
             </div>
         </div> 
         <p align="center" class="col-md-12 col-sm-12 col-xs-12" style="margin-top:20px;"><a href="index.php?view=news" class="btn btn-info" rel="tooltip">Xem thêm >></a></p>

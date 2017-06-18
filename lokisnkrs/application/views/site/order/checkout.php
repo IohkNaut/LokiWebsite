@@ -30,7 +30,6 @@
                     	<select id="parent_select" name="slt_payment" style="height:33px; margin-top:10px;
                                                                             border-radius:4px;font-size:14px;" class="col-xs-12 col-md-12 col-sm-12">
                             <option value="tienmat" >Thanh toán tiền mặt khi nhận hàng</option>
-                            <option value="nganluong" >Cổng thanh toán NGÂN LƯỢNG</option>
                             <option value="baokim" >Cổng thanh toán BẢO KIM</option>
                         </select> 
                     </div> 

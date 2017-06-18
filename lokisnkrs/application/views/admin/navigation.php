@@ -21,6 +21,7 @@
                             <li><a href="<?php echo admin_url('order/cancel_order');?>">Đơn hàng đã huỷ</a></li>
                       	</ul>
                     </li>
+                    <li><a href="<?php echo admin_url('report');?>">Báo cáo</a></li>
                 </ul>
 		    </div><!-- /.navbar-collapse -->           	         
 	</nav>

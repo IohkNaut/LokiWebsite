@@ -11,7 +11,7 @@
 	  	foreach($detail as $row): 
 	  ?>
       <tr>
-        <td style="text-align:center;text-transform:capitalize;"><?php echo $row->product_id?></td>
+        <td style="text-align:center;text-transform:capitalize;"><?php echo $row->product_name?></td>
         <td style="text-align:center;text-transform:capitalize;"><?php echo $row->product_size?></td>
         <td style="text-align:center;"><?php echo $row->quantity?></td>
       </tr>

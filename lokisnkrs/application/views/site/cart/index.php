@@ -58,7 +58,7 @@
 </div>
 <?php else: ?>
 <h4 class="text-center" style="margin-top:0px;">Không có sản phẩm nào trong giỏ hàng</h4><br/>
-<center><a href="#" class="btn btn-success"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a></center>
+<center><a href="<?php echo base_url('product/all_product')?>" class="btn btn-success"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a></center>
 <?php endif; ?>
 
 

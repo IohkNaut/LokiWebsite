@@ -48,7 +48,7 @@
             <input class="form-control" type="text" value="<?php echo number_format($order->cost, 0) ?> vnđ" disabled="disabled">
         </div> 
     </div> 
-    <?php if($order->status_shipment == 1):?>
+    <?php if($order->status == 1):?>
 	<div class="row"> 
         <div class="col-xs-6 col-md-6">
             <label for=""> Trạng thái thanh toán</label>
@@ -64,19 +64,18 @@
         </div> 
     </div> 
     
-    <button class="btn btn-md btn-primary btn-block" name="btn_edit" type="submit"> Lưu</button>
-    <?php elseif($order->status_shipment == 2): ?>
+    <?php elseif($order->status == 2): ?>
     <div class="row"> 
         <div class="col-xs-6 col-md-6">
             <label for=""> Trạng thái thanh toán</label>
             <select style="height:33px;border-radius:4px;font-size:14px; margin-bottom:25px;" class="col-xs-12 col-md-12">
-				<option value="1">Đã huỷ</option>
+				<option value="2">Đã huỷ</option>
             </select>
         </div> 
         <div class="col-xs-6 col-md-6" > 
 		    <label for=""> Trạng thái đơn hàng</label>
             <select name="slt_status" style="height:33px;border-radius:4px;font-size:14px; margin-bottom:25px;" class="col-xs-12 col-md-12">
-				<option value="1">Đã huỷ</option>
+				<option value="2">Đã huỷ</option>
             </select>
         </div> 
     </div> 
@@ -86,7 +85,7 @@
             <label for=""> Trạng thái thanh toán</label>
             <select style="height:33px;border-radius:4px;font-size:14px; margin-bottom:25px;" class="col-xs-12 col-md-12">
             <?php if($order->status_payment == 1):?>
-				<option value="1">Đã thanh toán</option>
+				<option value="1" >Đã thanh toán</option>
             <?php else:?>
             	<option value="0">Chưa thanh toán</option>
             <?php endif;?>
@@ -94,7 +93,7 @@
         </div> 
         <div class="col-xs-6 col-md-6" > 
 		    <label for=""> Trạng thái đơn hàng</label>
-            <select style="height:33px;border-radius:4px;font-size:14px; margin-bottom:25px;" class="col-xs-12 col-md-12">
+            <select name="slt_status" style="height:33px;border-radius:4px;font-size:14px; margin-bottom:25px;" class="col-xs-12 col-md-12">
 				<option value="0" selected="selected">Chưa giao hàng</option>
                 <option value="1" >Đã giao hàng</option>
             </select>

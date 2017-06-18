@@ -41,16 +41,33 @@ class Product extends MY_Controller {
 		$segment = $this->uri->segment('4');
 		$segment = intval($segment);
 
-		$list = $this->product_model->get_list_($segment, $config['per_page']);
-		$this->data['list'] = $list;
+		$input = array();
+		$input['limit'] = array($config['per_page'], $segment);		
 		
 		//kiem tra co loc du lieu khong
 		$input['where'] = array();
 		$id = $this->input->get('id');
 		$id = intval($id);
 		if($id > 0) {
-			$input['where']['id'] = $id;
+			$input['where']['product_id'] = $id;
 		}
+		$name = $this->input->get('name');
+		if($name) {
+			$input['like'] = array('product_name', $name);
+		}
+		$catalog_id = $this->input->get('catalog');
+		$catalog_id = intval($catalog_id);
+		if($catalog_id > 0) {
+			$input['where']['catalog_id'] = $catalog_id;
+		}
+		
+		$list = $this->product_model->get_list($input);
+		foreach($list as $p) {
+			$c = $this->catalog_model->get_info($p->catalog_id);
+			$p->catalog_name = $c->catalog_name;
+		}
+		$this->data['list'] = $list;
+		
 		
 		$input = array();
 		$input['order'] = array('catalog_name','asci');
@@ -320,13 +337,13 @@ class Product extends MY_Controller {
 			$this->session->set_flashdata('message', 'Không tồn tại dữ liệu!');
 			redirect(admin_url('product'));
 		}
-		//kiem tra danh muc co san pham khong
-//		$this->load->model('product_detail_model');
-//		$pd_detail = $this->product_detail_model->get_info_rule(array('product_id' => $id), 'pd_detail_id');
-//		if($pd_detail) {
-//			$this->session->set_flashdata('message', 'Vui lòng xoá tất cả chi tiết sản phẩm thuộc sản phẩm này trước khi xoá!');
-//			redirect(admin_url('product'));
-//		}
+		//kiem tra san pham chi tiet san pham khong
+		$this->load->model('product_detail_model');
+		$pd_detail = $this->product_detail_model->get_info_rule(array('product_id' => $id), 'pd_detail_id');
+		if($pd_detail) {
+			$this->session->set_flashdata('message', 'Vui lòng xoá tất cả chi tiết sản phẩm thuộc sản phẩm này trước khi xoá!');
+			redirect(admin_url('product'));
+		}
 		
 		//thuc hien xoa
 		if($this->product_model->delete($id)) {

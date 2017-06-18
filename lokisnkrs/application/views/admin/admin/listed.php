@@ -7,7 +7,7 @@
         <th style="text-align:center" class="col-md-1">Họ tên</th>
         <th style="text-align:center" class="col-md-1">Tên đăng nhập</th>
         <th style="text-align:center" class="col-md-1">Mật khẩu</th>
-        <th style="text-align:center" class="col-md-1" colspan="1">Quản lý</th>
+        <th style="text-align:center" class="col-md-1" colspan="2">Quản lý</th>
       </tr>
       
       <?php foreach($list as $row):?>
@@ -16,6 +16,9 @@
         <td style="text-align:center;text-transform:capitalize;vertical-align:middle;"><?php echo $row->admin_name;?></td>
         <td style="text-align:center;"><?php echo $row->username;?></td>
         <td style="text-align:center;"><?php echo $row->password;?></td>
+        <td align="center" style="vertical-align:middle;">
+        	<a href="<?php echo admin_url('admin/edit_all/'.$row->admin_id); ?>">
+            	<img src="<?php echo base_url();?>upload/Edit.png" title="Xoá"/></a></td>
         <td align="center" style="vertical-align:middle;">
         	<a href="<?php echo admin_url('admin/delete/'.$row->admin_id); ?>">
             	<img src="<?php echo base_url();?>upload/Delete.png" title="Xoá"/></a></td>

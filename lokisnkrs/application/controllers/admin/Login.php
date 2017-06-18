@@ -23,7 +23,10 @@ class Login extends MY_Controller {
 		
 		$this->load->model('admin_model');
 		$where = array('username' => $username, 'password' => $password);
-		if($this->admin_model->check_exists($where)) {
+		$admin = $this->admin_model->get_info_rule($where); 
+		if($admin) {
+			$this->session->set_userdata('permission', json_decode($admin->permission));
+			$this->session->set_userdata('admin_id', json_decode($admin->admin_id));
 			return true;
 		}
 		$this->form_validation->set_message(__FUNCTION__, '* Tên đăng nhập hoặc mật khẩu không đúng!');

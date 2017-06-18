@@ -95,6 +95,11 @@ class Order extends MY_Controller {
 		$input = array();
 		$input['where'] = array('orders_id' => $info->orders_id);
 		$detail = $this->order_detail_model->get_list($input);
+		$this->load->model('product_model');
+		foreach($detail as $p) {
+			$c = $this->product_model->get_info($p->product_id);
+			$p->product_name = $c->product_name;
+		}
 		
 		if($this->input->post()) {
 			$this->form_validation->set_rules('txt_name', 'Tên khách hàng', 'min_length[3]|max_length[40]');
@@ -114,8 +119,6 @@ class Order extends MY_Controller {
 					'phone' => $phone,
 					'email' => $email,
 					'address' => $address,
-					'cost' => $total_cost,
-					'payment' => $payment,
 					'status_shipment' => $stt_shipment
 				);
 				
@@ -132,6 +135,16 @@ class Order extends MY_Controller {
 				}
 				
 				if($this->order_model->update($id, $data)) {
+					if($stt_shipment == 1) {
+						$this->load->model('product_detail_model');
+						foreach($detail as $row) {
+							$qty = $row->quantity;
+							$pd_id = $row->product_id;
+							$pd_size = $row->product_size;
+							$sql = "update product_detail set quantity = (quantity - '$qty') where product_id = '$pd_id' and size = '$pd_size'";
+							$this->db->query($sql);
+						}
+					}
 					$this->session->set_flashdata('message', 'Cập nhật đơn hàng thành công!');
 				} else {
 					$this->session->set_flashdata('message', 'Cập nhật đơn hàng thất bại!');
@@ -141,6 +154,7 @@ class Order extends MY_Controller {
 		}
 		$this->data['message'] = $this->session->flashdata('message');
 		$this->data['detail'] = $detail;
+		$info = $this->order_model->get_info($id);
 		$this->data['order'] = $info;
 		$this->data['temp'] = 'admin/order/detail';
 		$this->load->view('admin/main', $this->data);
@@ -160,7 +174,7 @@ class Order extends MY_Controller {
 
 		$data = array (
 			'status_payment' => 2,
-			'status_shipment' => 2
+			'status_shipment' => 2,
 		);
 		
 		if($this->order_model->update($id, $data)) {

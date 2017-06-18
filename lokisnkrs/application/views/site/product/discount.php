@@ -17,7 +17,7 @@
                     <p style="font-size:17px; font-weight:bold; text-transform:uppercase; background-color:#C33;"> 
                         <?php echo number_format($row->final_price,0) ?> vnđ</p>
                     <p style="margin-top:20px;">
-                        <a href="<?php echo base_url('product/detail/'.$row->product_id); ?>" class="btn btn-success" rel="tooltip">Xem chi tiết</a> 
+                        <a href="<?php echo base_url('product/detail/'.$row->product_id); ?>" class="btn btn-success" rel="tooltip">Xem chi tiết</a> </p>
                 </div> <img src="<?php echo base_url('upload/product/'.$row->image);?>"> 
             </div> 
     </div> 

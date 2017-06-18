@@ -58,8 +58,25 @@ class MY_Controller extends CI_Controller {
 		if($login == '' && $controller != 'login') {
 			redirect(admin_url('login'));
 		}
+		
+		$admin_id = $this->session->userdata('admin_id');
+				
 		if($login != '' && $controller == 'login') {
 			redirect(admin_url('home'));
+		} elseif (!in_array($controller, array('home', 'login'))) {
+			//kiem tra quyen
+			$root_admin = $this->config->item('root_admin');
+			$check = true;
+			if($root_admin != $admin_id) {
+				$permission_admin = $this->session->userdata('permission');
+				if(isset($permission_admin->$controller) == 0) {
+					$check = false;
+				}
+				if(!$check ) {
+					$this->session->set_flashdata('message', 'Bạn không có quyền thực hiện chức năng này!');
+					redirect(admin_url('home'));
+				}
+			}
 		}
 	}
 
