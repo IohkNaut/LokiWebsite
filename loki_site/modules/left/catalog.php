@@ -6,7 +6,7 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="index.php?xem=details_type&id=1">Tất cả sản phẩm</a>
+            	<a data-parent="#accordion" href="index.php?view=all&page=1">Tất cả sản phẩm</a>
             </div>
     	</div>
     </div>
@@ -14,7 +14,7 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="index.php?xem=details_type&id=1">Hàng mới về</a>
+            	<a data-parent="#accordion" href="index.php?view=new&page=1">Hàng mới về</a>
             </div>
     	</div>
     </div>
@@ -22,7 +22,7 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="#">SP bán chạy</a>
+            	<a data-parent="#accordion" href="index.php?view=best&page=1">Sản phẩm bán chạy</a>
             </div>
     	</div>
     </div>
@@ -30,73 +30,43 @@
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-parent="#accordion" href="#">Sản phẩm giảm giá</a>
+            	<a data-parent="#accordion" href="index.php?view=sale&page=1">Sản phẩm giảm giá</a>
             </div>
     	</div>
     </div>
-                          
+    <?php
+	$sql_catalog = "select * from catalog where parent_id is null";
+	$query_catalog = mysql_query($sql_catalog);
+	$num = 0;
+	while ($row_catalog = mysql_fetch_array($query_catalog)) {
+		$tmp_id = $row_catalog['catalog_id'];
+		$sql_child = "select * from catalog where parent_id = $tmp_id";
+		$query_child = mysql_query($sql_child);
+	?>                      
     <div class="panel panel-default">
     	<div class="panel-heading">
         	<div class="panel-title" style="font-size: 14px;">
-            	<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Adidas <span class="caret"></span></a>
+            	<a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $num ?>" style="text-transform:capitalize;">
+				<?php echo $row_catalog['catalog_name'] ?><span class="caret"></span></a>
             </div>
         </div>
         
-        <div id="collapseOne" class="panel-collapse collapse">
+        <div id="<?php echo $num ?>" class="panel-collapse collapse">
         	<ul class="list-group">
-            	<li class="list-group-item"><a href="index.php?xem=details_type&id=1" style="color:#000;">Yeezy</a></li>
-                <li class="list-group-item"><a href="index.php?xem=details_type&id=1" style="color:#000;">NMD</a></li>
-                <li class="list-group-item"><a href="index.php?xem=details_type&id=1" style="color:#000;">Tubular</a></li>
-                <li class="list-group-item"><a href="index.php?xem=details_type&id=1" style="color:#000;">Ultra Boost</a></li>
+            	<?php
+					while ($row_child = mysql_fetch_array($query_child)) {
+				?>
+            	<li class="list-group-item"><a href="index.php?view=details_type&id=<?php echo $row_child['catalog_id'] ?>" style="color:#000;text-transform:capitalize;">
+				<?php echo $row_child['catalog_name'] ?></a></li>
+                <?php 
+				$num += 1;
+				} ?>
         	</ul>
      	</div>
    	</div>
-                            
-    <div class="panel panel-default">
-    	<div class="panel-heading">
-        	<div class="panel-title" style="font-size: 14px;">
-            	<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Asics <span class="caret"></span></a>
-            </div>
-        </div>
-        
-        <div id="collapseTwo" class="panel-collapse collapse">
-        	<ul class="list-group">
-            	<li class="list-group-item"><a href="#" style="color:#000;">Gel Lyte III</a></li>
-                <li class="list-group-item"><a href="#" style="color:#000;">Gel Lyte V</a></li>
-        	</ul>
-     	</div>
-   	</div>
+    <?php
+	}
+	?>   
+    <br />                     
     
-    <div class="panel panel-default">
-    	<div class="panel-heading">
-        	<div class="panel-title" style="font-size: 14px;">
-            	<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Converse <span class="caret"></span></a>
-            </div>
-        </div>
-        
-        <div id="collapseThree" class="panel-collapse collapse">
-        	<ul class="list-group">
-            	<li class="list-group-item"><a href="#" style="color:#000;">1970s</a></li>
-                <li class="list-group-item"><a href="#" style="color:#000;">Chuck Taylor</a></li>
-                <li class="list-group-item"><a href="#" style="color:#000;">Chuck Taylor II</a></li>
-        	</ul>
-     	</div>
-   	</div>
-    
-    <div class="panel panel-default">
-    	<div class="panel-heading">
-        	<div class="panel-title" style="font-size: 14px;">
-            	<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Nike <span class="caret"></span></a>
-            </div>
-        </div>
-        
-        <div id="collapseFour" class="panel-collapse collapse">
-        	<ul class="list-group">
-            	<li class="list-group-item"><a href="#" style="color:#000;">Air Max</a></li>
-                <li class="list-group-item"><a href="#" style="color:#000;">Huarache</a></li>
-                <li class="list-group-item"><a href="#" style="color:#000;">Jordan</a></li>
-                <li class="list-group-item"><a href="#" style="color:#000;">Roshe Run</a></li>
-        	</ul>
-     	</div>
-   	</div>
 </div>
